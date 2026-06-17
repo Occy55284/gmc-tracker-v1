@@ -12,6 +12,42 @@ function getSupabase() {
   )
 }
 
+const HOSPITALITY_NOTIFICATION_RECIPIENTS = [
+  'aldemar.neto@accenture.com',
+  'robert.charles.long@accenture.com'
+]
+
+async function notifyHospitality(payload: Record<string, any>) {
+  if (!process.env.RESEND_API_KEY) return
+
+  const submittedAt = new Date().toLocaleString('en-GB', { timeZone: 'Europe/London' })
+  const lines = [
+    `Date: ${payload.request_date}`,
+    `Requestor: ${payload.requestor_name}`,
+    `WBS / Cost Centre: ${payload.wbs_code}`,
+    `Rooms (${payload.room_count}): ${payload.room_list.replace(/\n/g, ', ')}`,
+    `Refreshment total: £${payload.refreshment_total.toFixed(2)}`,
+    payload.lunch_required
+      ? `Lunch: ${payload.lunch_details || '-'} at ${payload.lunch_time || '-'} (£${payload.lunch_cost.toFixed(2)})`
+      : 'Lunch: not required',
+    `Submitted: ${submittedAt}`
+  ]
+
+  await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      from: 'GMC Tracker <onboarding@resend.dev>',
+      to: HOSPITALITY_NOTIFICATION_RECIPIENTS,
+      subject: `New GMC request: ${payload.requestor_name} (${payload.room_count} rooms)`,
+      text: lines.join('\n')
+    })
+  })
+}
+
 export async function createRequest(formData: FormData) {
   const roomList = String(formData.get('room_list') || '')
   const lunchRequired = formData.get('lunch_required') === 'on'
@@ -26,6 +62,7 @@ export async function createRequest(formData: FormData) {
     refreshment_total: refreshmentTotal(roomList),
     lunch_required: lunchRequired,
     lunch_details: String(formData.get('lunch_details') || '').trim() || null,
+    lunch_time: lunchRequired ? (String(formData.get('lunch_time') || '').trim() || null) : null,
     lunch_cost: lunchRequired ? lunchCost : 0,
     notes: String(formData.get('notes') || '').trim() || null,
     status: 'Submitted'
@@ -37,6 +74,8 @@ export async function createRequest(formData: FormData) {
 
   const { error } = await getSupabase().from('gmc_requests').insert(payload)
   if (error) throw new Error(error.message)
+
+  await notifyHospitality(payload)
 
   revalidatePath('/')
   revalidatePath('/queue')

@@ -26,6 +26,9 @@ export default function NewRequestPage() {
           <label>Lunch Details</label>
           <textarea name="lunch_details" placeholder="Example: 6 x wraps, 2 x salads" />
 
+          <label>Time of Lunch</label>
+          <input type="time" name="lunch_time" />
+
           <label>Lunch Cost</label>
           <input type="number" step="0.01" min="0" name="lunch_cost" placeholder="0.00" />
 

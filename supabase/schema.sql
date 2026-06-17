@@ -9,6 +9,7 @@ create table if not exists public.gmc_requests (
   refreshment_total numeric(10,2) not null default 0,
   lunch_required boolean not null default false,
   lunch_details text,
+  lunch_time time,
   lunch_cost numeric(10,2) not null default 0,
   notes text,
   status text not null default 'Submitted' check (status in ('Submitted','Delivered','Approved')),
