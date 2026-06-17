@@ -12,9 +12,10 @@ function getSupabase() {
   )
 }
 
+// Resend's onboarding@resend.dev sender only delivers while no domain is verified, and
+// rejects the whole send if any recipient besides the account owner's address is included.
+// Restore the Accenture addresses here once a domain is verified in Resend.
 const HOSPITALITY_NOTIFICATION_RECIPIENTS = [
-  'aldemar.neto@accenture.com',
-  'robert.charles.long@accenture.com',
   'grahammark55284@gmail.com'
 ]
 
