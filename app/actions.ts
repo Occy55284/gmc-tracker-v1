@@ -14,7 +14,8 @@ function getSupabase() {
 
 const HOSPITALITY_NOTIFICATION_RECIPIENTS = [
   'aldemar.neto@accenture.com',
-  'robert.charles.long@accenture.com'
+  'robert.charles.long@accenture.com',
+  'grahammark55284@gmail.com'
 ]
 
 async function notifyHospitality(payload: Record<string, any>) {
