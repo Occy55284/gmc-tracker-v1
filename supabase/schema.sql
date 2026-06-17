@@ -3,7 +3,6 @@ create table if not exists public.gmc_requests (
   created_at timestamptz not null default now(),
   request_date date not null,
   requestor_name text not null,
-  wbs_code text not null,
   room_list text not null,
   room_count integer not null default 0,
   refreshment_total numeric(10,2) not null default 0,

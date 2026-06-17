@@ -26,7 +26,6 @@ async function notifyHospitality(payload: Record<string, any>) {
   const lines = [
     `Date: ${payload.request_date}`,
     `Requestor: ${payload.requestor_name}`,
-    `WBS / Cost Centre: ${payload.wbs_code}`,
     `Rooms (${payload.room_count}): ${payload.room_list.replace(/\n/g, ', ')}`,
     `Refreshment total: £${payload.refreshment_total.toFixed(2)}`,
     payload.lunch_required
@@ -62,7 +61,6 @@ export async function createRequest(formData: FormData) {
   const payload = {
     request_date: String(formData.get('request_date') || ''),
     requestor_name: String(formData.get('requestor_name') || '').trim(),
-    wbs_code: String(formData.get('wbs_code') || '').trim(),
     room_list: roomList.trim(),
     room_count: countRooms(roomList),
     refreshment_total: refreshmentTotal(roomList),
@@ -74,8 +72,8 @@ export async function createRequest(formData: FormData) {
     status: 'Submitted'
   }
 
-  if (!payload.request_date || !payload.requestor_name || !payload.wbs_code || !payload.room_list) {
-    throw new Error('Date, requestor, WBS/cost centre and room list are required.')
+  if (!payload.request_date || !payload.requestor_name || !payload.room_list) {
+    throw new Error('Date, requestor and room list are required.')
   }
 
   const { error } = await getSupabase().from('gmc_requests').insert(payload)

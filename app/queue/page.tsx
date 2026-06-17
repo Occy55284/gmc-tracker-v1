@@ -23,7 +23,7 @@ export default async function QueuePage() {
         <table>
           <thead>
             <tr>
-              <th>Date</th><th>Requestor</th><th>WBS</th><th>Rooms</th><th>Lunch</th><th>Total</th><th>Submitted</th><th>Status</th><th>Action</th>
+              <th>Date</th><th>Requestor</th><th>Rooms</th><th>Lunch</th><th>Total</th><th>Submitted</th><th>Status</th><th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -31,7 +31,6 @@ export default async function QueuePage() {
               <tr key={r.id}>
                 <td>{r.request_date}</td>
                 <td>{r.requestor_name}</td>
-                <td>{r.wbs_code}</td>
                 <td><pre>{r.room_list}</pre><strong>{r.room_count} rooms</strong></td>
                 <td>{r.lunch_required ? <><div>{r.lunch_details}{r.lunch_time ? ` at ${r.lunch_time}` : ''}</div><strong>{money(r.lunch_cost)}</strong></> : 'No'}</td>
                 <td>{money(r.total_cost)}</td>
@@ -58,7 +57,7 @@ export default async function QueuePage() {
                 </td>
               </tr>
             ))}
-            {!rows.length && <tr><td colSpan={9}>No active requests.</td></tr>}
+            {!rows.length && <tr><td colSpan={8}>No active requests.</td></tr>}
           </tbody>
         </table>
       </div>

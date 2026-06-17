@@ -14,9 +14,6 @@ export default function NewRequestPage() {
           <label>Requestor Name</label>
           <input name="requestor_name" placeholder="Customer Service name" required />
 
-          <label>WBS / Cost Centre</label>
-          <input name="wbs_code" placeholder="Example: CON4M001" required />
-
           <label>Room List - one room per line</label>
           <textarea name="room_list" placeholder={`3.05\n3.07\n4.06`} required />
           <p>Each room is charged at the standard refreshment setup rate of £3.99.</p>
