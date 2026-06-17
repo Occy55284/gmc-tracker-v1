@@ -33,7 +33,7 @@ async function notifyHospitality(payload: Record<string, any>) {
     `Submitted: ${submittedAt}`
   ]
 
-  await fetch('https://api.resend.com/emails', {
+  const response = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: {
       Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
@@ -46,6 +46,10 @@ async function notifyHospitality(payload: Record<string, any>) {
       text: lines.join('\n')
     })
   })
+
+  if (!response.ok) {
+    console.error('Hospitality notification email failed', response.status, await response.text())
+  }
 }
 
 export async function createRequest(formData: FormData) {
