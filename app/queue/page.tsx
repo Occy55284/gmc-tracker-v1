@@ -3,6 +3,10 @@ import { money } from '@/lib/calculations'
 import { updateStatus } from '@/app/actions'
 import StatusBadge from '@/app/components/StatusBadge'
 
+function submittedAt(value: string) {
+  return new Date(value).toLocaleString('en-GB', { timeZone: 'Europe/London' })
+}
+
 export default async function QueuePage() {
   const { data } = await supabase
     .from('gmc_requests')
@@ -27,7 +31,7 @@ export default async function QueuePage() {
           <table>
             <thead>
               <tr>
-                <th>Date</th><th>Requestor</th><th>WBS</th><th>Rooms</th><th>Lunch</th><th>Total</th><th>Status</th><th>Action</th>
+                <th>Date</th><th>Requestor</th><th>Rooms</th><th>Lunch</th><th>Total</th><th>Submitted</th><th>Status</th><th>Action</th>
               </tr>
             </thead>
             <tbody>
@@ -35,10 +39,10 @@ export default async function QueuePage() {
                 <tr key={r.id}>
                   <td>{r.request_date}</td>
                   <td>{r.requestor_name}</td>
-                  <td>{r.wbs_code}</td>
                   <td><pre>{r.room_list}</pre><strong>{r.room_count} rooms</strong></td>
-                  <td>{r.lunch_required ? <><div>{r.lunch_details}</div><strong>{money(r.lunch_cost)}</strong></> : 'No'}</td>
+                  <td>{r.lunch_required ? <><div>{r.lunch_details}{r.lunch_time ? ` at ${r.lunch_time}` : ''}</div><strong>{money(r.lunch_cost)}</strong></> : 'No'}</td>
                   <td>{money(r.total_cost)}</td>
+                  <td>{submittedAt(r.created_at)}</td>
                   <td><StatusBadge status={r.status} /></td>
                   <td>
                     <div className="actions">

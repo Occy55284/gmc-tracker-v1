@@ -12,6 +12,47 @@ function getSupabase() {
   )
 }
 
+// Resend's onboarding@resend.dev sender only delivers while no domain is verified, and
+// rejects the whole send if any recipient besides the account owner's address is included.
+// Restore the Accenture addresses here once a domain is verified in Resend.
+const HOSPITALITY_NOTIFICATION_RECIPIENTS = [
+  'grahammark55284@gmail.com'
+]
+
+async function notifyHospitality(payload: Record<string, any>) {
+  if (!process.env.RESEND_API_KEY) return
+
+  const submittedAt = new Date().toLocaleString('en-GB', { timeZone: 'Europe/London' })
+  const lines = [
+    `Date: ${payload.request_date}`,
+    `Requestor: ${payload.requestor_name}`,
+    `Rooms (${payload.room_count}): ${payload.room_list.replace(/\n/g, ', ')}`,
+    `Refreshment total: £${payload.refreshment_total.toFixed(2)}`,
+    payload.lunch_required
+      ? `Lunch: ${payload.lunch_details || '-'} at ${payload.lunch_time || '-'} (£${payload.lunch_cost.toFixed(2)})`
+      : 'Lunch: not required',
+    `Submitted: ${submittedAt}`
+  ]
+
+  const response = await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      from: 'GMC Tracker <onboarding@resend.dev>',
+      to: HOSPITALITY_NOTIFICATION_RECIPIENTS,
+      subject: `New GMC request: ${payload.requestor_name} (${payload.room_count} rooms)`,
+      text: lines.join('\n')
+    })
+  })
+
+  if (!response.ok) {
+    console.error('Hospitality notification email failed', response.status, await response.text())
+  }
+}
+
 export async function createRequest(formData: FormData) {
   const roomList = String(formData.get('room_list') || '')
   const lunchRequired = formData.get('lunch_required') === 'on'
@@ -20,23 +61,25 @@ export async function createRequest(formData: FormData) {
   const payload = {
     request_date: String(formData.get('request_date') || ''),
     requestor_name: String(formData.get('requestor_name') || '').trim(),
-    wbs_code: String(formData.get('wbs_code') || '').trim(),
     room_list: roomList.trim(),
     room_count: countRooms(roomList),
     refreshment_total: refreshmentTotal(roomList),
     lunch_required: lunchRequired,
     lunch_details: String(formData.get('lunch_details') || '').trim() || null,
+    lunch_time: lunchRequired ? (String(formData.get('lunch_time') || '').trim() || null) : null,
     lunch_cost: lunchRequired ? lunchCost : 0,
     notes: String(formData.get('notes') || '').trim() || null,
     status: 'Submitted'
   }
 
-  if (!payload.request_date || !payload.requestor_name || !payload.wbs_code || !payload.room_list) {
-    throw new Error('Date, requestor, WBS/cost centre and room list are required.')
+  if (!payload.request_date || !payload.requestor_name || !payload.room_list) {
+    throw new Error('Date, requestor and room list are required.')
   }
 
   const { error } = await getSupabase().from('gmc_requests').insert(payload)
   if (error) throw new Error(error.message)
+
+  await notifyHospitality(payload)
 
   revalidatePath('/')
   revalidatePath('/queue')
