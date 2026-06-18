@@ -60,16 +60,9 @@ p { color: var(--ink-soft); line-height: 1.55; margin: 0 0 12px; }
 }
 .brand { display: flex; align-items: center; gap: 12px; }
 .brand-mark {
-  display: grid;
-  place-items: center;
   width: 42px;
   height: 42px;
   border-radius: 12px;
-  background: linear-gradient(135deg, var(--indigo) 0%, var(--violet) 55%, var(--pink) 110%);
-  color: #fff;
-  font-weight: 800;
-  font-size: 14px;
-  letter-spacing: 0.02em;
   box-shadow: 0 6px 16px rgba(99, 102, 241, 0.35);
 }
 .brand-text { display: flex; flex-direction: column; line-height: 1.1; }
