@@ -1,6 +1,7 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
 import NavBar from './components/NavBar'
+import ShareButton from './components/ShareButton'
 
 const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' })
 
@@ -23,6 +24,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               </span>
             </div>
             <NavBar />
+            <ShareButton />
           </div>
         </header>
         <main className="container">{children}</main>
