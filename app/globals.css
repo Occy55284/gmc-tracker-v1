@@ -75,6 +75,7 @@ p { color: var(--ink-soft); line-height: 1.55; margin: 0 0 12px; }
 .brand-text { display: flex; flex-direction: column; line-height: 1.1; }
 .brand-title { font-weight: 800; font-size: 16px; letter-spacing: -0.01em; }
 .brand-sub { font-size: 12px; color: var(--ink-soft); }
+.share-btn { padding: 9px 16px; font-size: 13px; }
 
 /* ---------- Nav ---------- */
 .nav { display: flex; gap: 6px; flex-wrap: wrap; }
