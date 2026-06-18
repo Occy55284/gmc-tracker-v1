@@ -3,6 +3,8 @@ import { supabase } from '@/lib/supabase'
 import { money } from '@/lib/calculations'
 import StatusBadge from './components/StatusBadge'
 
+export const dynamic = 'force-dynamic'
+
 export default async function Dashboard() {
   const today = new Date()
   const weekStart = new Date(today)

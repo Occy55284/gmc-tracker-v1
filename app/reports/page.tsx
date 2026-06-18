@@ -1,6 +1,8 @@
 import { supabase } from '@/lib/supabase'
 import { money } from '@/lib/calculations'
 
+export const dynamic = 'force-dynamic'
+
 function startOfWeek(date = new Date()) {
   const d = new Date(date)
   d.setDate(d.getDate() - ((d.getDay() + 6) % 7))

@@ -3,6 +3,8 @@ import { money } from '@/lib/calculations'
 import { updateStatus } from '@/app/actions'
 import StatusBadge from '@/app/components/StatusBadge'
 
+export const dynamic = 'force-dynamic'
+
 function submittedAt(value: string) {
   return new Date(value).toLocaleString('en-GB', { timeZone: 'Europe/London' })
 }
