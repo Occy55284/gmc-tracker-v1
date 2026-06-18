@@ -40,12 +40,17 @@ export default async function ReportsPage() {
 
   return (
     <>
-      <h1>Reports</h1>
+      <div className="page-head">
+        <div>
+          <h1>Reports</h1>
+          <p className="lead">Approved records only — ready for weekly and monthly billing.</p>
+        </div>
+      </div>
+
       <div className="grid">
         <div className="card">
           <h2>This Week</h2>
-          <p>Approved records only.</p>
-          <table><tbody>
+          <table className="kv"><tbody>
             <tr><th>Requests</th><td>{weekly.requests}</td></tr>
             <tr><th>Rooms serviced</th><td>{weekly.rooms}</td></tr>
             <tr><th>Refreshment revenue</th><td>{money(weekly.refreshments)}</td></tr>
@@ -55,8 +60,7 @@ export default async function ReportsPage() {
         </div>
         <div className="card">
           <h2>This Month</h2>
-          <p>Approved records only.</p>
-          <table><tbody>
+          <table className="kv"><tbody>
             <tr><th>Requests</th><td>{monthly.requests}</td></tr>
             <tr><th>Rooms serviced</th><td>{monthly.rooms}</td></tr>
             <tr><th>Refreshment revenue</th><td>{money(monthly.refreshments)}</td></tr>
@@ -65,6 +69,7 @@ export default async function ReportsPage() {
           </tbody></table>
         </div>
       </div>
+
       <div className="card">
         <h2>Export</h2>
         <p>V1 stores all approved records in Supabase. The first export option can be added next as either CSV download or Excel export.</p>
