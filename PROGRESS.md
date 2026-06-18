@@ -23,6 +23,31 @@ log after each working session so the project history stays current.
 
 ---
 
+## 2026-06-18 — UI overhaul (professional + vibrant)
+**Done**
+- Reworked `app/globals.css` into a design system: design tokens, vibrant
+  gradient accents (indigo/violet brand, cyan/amber/emerald/pink), polished
+  cards, forms, buttons and tables.
+- Added a sticky branded top bar with a gradient "GMC" logo mark and a new
+  `NavBar` client component with active-page highlighting.
+- Added a reusable color-coded `StatusBadge` (Submitted = amber, Delivered =
+  cyan, Approved = emerald) and used it on the Dashboard and Queue.
+- Restyled all pages: gradient stat tiles with icons (Dashboard), tidier form
+  (New Request), responsive table wrappers (Queue), key/value summary tables
+  (Reports).
+- Switched to the Inter font via `next/font/google`.
+- Verified `npm run build` passes (all routes prerender).
+
+**In progress / next**
+- Functionality unchanged. Possible follow-ups: CSV/Excel export on Reports;
+  dark mode; mobile card layout for the Queue table.
+
+**Notes / decisions**
+- Pure presentation change — no data model or server action logic touched.
+- Trial-ready: kept the design system in one CSS file for easy tweaking.
+
+---
+
 ## 2026-06-18 — Project baseline & progress tracking
 **Done**
 - Captured the current state of the app (Next.js + Supabase) as the starting baseline.
