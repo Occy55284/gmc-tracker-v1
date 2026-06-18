@@ -1,21 +1,31 @@
 import './globals.css'
-import Link from 'next/link'
+import { Inter } from 'next/font/google'
+import NavBar from './components/NavBar'
 
-export const metadata = { title: 'GMC Tracker V1' }
+const inter = Inter({ subsets: ['latin'], variable: '--font-inter', display: 'swap' })
+
+export const metadata = {
+  title: 'GMC Tracker',
+  description: 'Hospitality charging capture and reporting',
+}
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" className={inter.variable}>
       <body>
-        <main className="container">
-          <div className="nav">
-            <Link href="/">Dashboard</Link>
-            <Link href="/new-request">New Request</Link>
-            <Link href="/queue">Hospitality Queue</Link>
-            <Link href="/reports">Reports</Link>
+        <header className="topbar">
+          <div className="topbar-inner">
+            <div className="brand">
+              <span className="brand-mark">GMC</span>
+              <span className="brand-text">
+                <span className="brand-title">GMC Tracker</span>
+                <span className="brand-sub">Hospitality charging</span>
+              </span>
+            </div>
+            <NavBar />
           </div>
-          {children}
-        </main>
+        </header>
+        <main className="container">{children}</main>
       </body>
     </html>
   )
