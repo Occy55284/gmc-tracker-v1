@@ -104,3 +104,24 @@ export async function updateStatus(formData: FormData) {
   revalidatePath('/queue')
   revalidatePath('/reports')
 }
+
+export async function addLunch(formData: FormData) {
+  const id = String(formData.get('id'))
+  const lunchDetails = String(formData.get('lunch_details') || '').trim()
+  const lunchTime = String(formData.get('lunch_time') || '').trim()
+  const lunchCost = Number(formData.get('lunch_cost') || 0)
+
+  const updates = {
+    lunch_required: true,
+    lunch_details: lunchDetails || null,
+    lunch_time: lunchTime || null,
+    lunch_cost: lunchCost
+  }
+
+  const { error } = await getSupabase().from('gmc_requests').update(updates).eq('id', id)
+  if (error) throw new Error(error.message)
+
+  revalidatePath('/')
+  revalidatePath('/queue')
+  revalidatePath('/reports')
+}

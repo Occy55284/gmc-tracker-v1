@@ -1,6 +1,6 @@
 import { supabase } from '@/lib/supabase'
 import { money } from '@/lib/calculations'
-import { updateStatus } from '@/app/actions'
+import { updateStatus, addLunch } from '@/app/actions'
 import StatusBadge from '@/app/components/StatusBadge'
 
 export const dynamic = 'force-dynamic'
@@ -42,7 +42,25 @@ export default async function QueuePage() {
                   <td>{r.request_date}</td>
                   <td>{r.requestor_name}</td>
                   <td><pre>{r.room_list}</pre><strong>{r.room_count} rooms</strong></td>
-                  <td>{r.lunch_required ? <><div>{r.lunch_details}{r.lunch_time ? ` at ${r.lunch_time}` : ''}</div><strong>{money(r.lunch_cost)}</strong></> : 'No'}</td>
+                  <td>
+                    {r.lunch_required ? (
+                      <><div>{r.lunch_details}{r.lunch_time ? ` at ${r.lunch_time}` : ''}</div><strong>{money(r.lunch_cost)}</strong></>
+                    ) : (
+                      <details>
+                        <summary className="hint" style={{ cursor: 'pointer' }}>No — add lunch</summary>
+                        <form action={addLunch} style={{ marginTop: 10, minWidth: 200 }}>
+                          <input type="hidden" name="id" value={r.id} />
+                          <label>Lunch Details</label>
+                          <textarea name="lunch_details" placeholder="Example: 6 x wraps, 2 x salads" />
+                          <label>Time of Lunch</label>
+                          <input type="time" name="lunch_time" />
+                          <label>Lunch Cost</label>
+                          <input type="number" step="0.01" min="0" name="lunch_cost" placeholder="0.00" required />
+                          <button className="secondary" type="submit" style={{ marginTop: 10 }}>Add Lunch</button>
+                        </form>
+                      </details>
+                    )}
+                  </td>
                   <td>{money(r.total_cost)}</td>
                   <td>{submittedAt(r.created_at)}</td>
                   <td><StatusBadge status={r.status} /></td>
