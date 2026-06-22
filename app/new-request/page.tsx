@@ -20,9 +20,6 @@ export default function NewRequestPage() {
           <label>Requestor Name</label>
           <input name="requestor_name" placeholder="Customer Service name" required />
 
-          <label>WBS / Cost Centre</label>
-          <input name="wbs_code" placeholder="Example: CON4M001" required />
-
           <label>Room List — one room per line</label>
           <textarea name="room_list" placeholder={`3.05\n3.07\n4.06`} required />
           <p className="hint">Each room is charged at the standard refreshment setup rate of £3.40.</p>
@@ -31,6 +28,9 @@ export default function NewRequestPage() {
 
           <label>Lunch Details</label>
           <textarea name="lunch_details" placeholder="Example: 6 x wraps, 2 x salads" />
+
+          <label>Time of Lunch</label>
+          <input type="time" name="lunch_time" />
 
           <label>Lunch Cost</label>
           <input type="number" step="0.01" min="0" name="lunch_cost" placeholder="0.00" />

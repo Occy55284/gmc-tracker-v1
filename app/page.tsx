@@ -3,6 +3,8 @@ import { supabase } from '@/lib/supabase'
 import { money } from '@/lib/calculations'
 import StatusBadge from './components/StatusBadge'
 
+export const dynamic = 'force-dynamic'
+
 export default async function Dashboard() {
   const { data: requests } = await supabase
     .from('gmc_requests')
