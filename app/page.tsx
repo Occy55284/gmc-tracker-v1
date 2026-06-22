@@ -4,15 +4,10 @@ import { money } from '@/lib/calculations'
 import StatusBadge from './components/StatusBadge'
 
 export default async function Dashboard() {
-  const today = new Date()
-  const weekStart = new Date(today)
-  weekStart.setDate(today.getDate() - ((today.getDay() + 6) % 7))
-
   const { data: requests } = await supabase
     .from('gmc_requests')
     .select('*')
-    .gte('request_date', weekStart.toISOString().slice(0, 10))
-    .order('request_date', { ascending: false })
+    .order('created_at', { ascending: false })
     .limit(10)
 
   const rows = requests || []
@@ -33,7 +28,7 @@ export default async function Dashboard() {
       <div className="grid stats">
         <div className="stat stat-indigo">
           <span className="stat-icon">📋</span>
-          <span className="stat-label">This week requests</span>
+          <span className="stat-label">Recent requests</span>
           <span className="stat-value">{rows.length}</span>
         </div>
         <div className="stat stat-cyan">
