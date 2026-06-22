@@ -1,4 +1,4 @@
-export const ROOM_PRICE = 3.99
+export const ROOM_PRICE = 3.40
 
 export function countRooms(roomList: string): number {
   return roomList
