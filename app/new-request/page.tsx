@@ -22,7 +22,7 @@ export default function NewRequestPage() {
 
           <label>Room List — one room per line</label>
           <textarea name="room_list" placeholder={`3.05\n3.07\n4.06`} required />
-          <p className="hint">Each room is charged at the standard refreshment setup rate of £3.99.</p>
+          <p className="hint">Each room is charged at the standard refreshment setup rate of £3.40.</p>
 
           <label className="check"><input type="checkbox" name="lunch_required" /> Lunch required?</label>
 
