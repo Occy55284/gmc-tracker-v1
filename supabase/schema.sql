@@ -11,7 +11,7 @@ create table if not exists public.gmc_requests (
   lunch_time time,
   lunch_cost numeric(10,2) not null default 0,
   notes text,
-  status text not null default 'Submitted' check (status in ('Submitted','Delivered','Approved')),
+  status text not null default 'Submitted' check (status in ('Submitted','Delivered','Approved','Rejected')),
   approved_by text,
   approved_at timestamptz,
   total_cost numeric(10,2) generated always as (refreshment_total + lunch_cost) stored

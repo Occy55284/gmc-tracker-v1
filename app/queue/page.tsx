@@ -13,7 +13,7 @@ export default async function QueuePage() {
   const { data } = await supabase
     .from('gmc_requests')
     .select('*')
-    .neq('status', 'Approved')
+    .not('status', 'in', '(Approved,Rejected)')
     .order('request_date', { ascending: true })
     .order('created_at', { ascending: true })
 
@@ -74,12 +74,19 @@ export default async function QueuePage() {
                         </form>
                       )}
                       {r.status === 'Delivered' && (
-                        <form action={updateStatus} className="actions">
-                          <input type="hidden" name="id" value={r.id} />
-                          <input type="hidden" name="status" value="Approved" />
-                          <input name="approved_by" placeholder="Approved by" />
-                          <button className="success" type="submit">Approve</button>
-                        </form>
+                        <>
+                          <form action={updateStatus} className="actions">
+                            <input type="hidden" name="id" value={r.id} />
+                            <input type="hidden" name="status" value="Approved" />
+                            <input name="approved_by" placeholder="Approved by" />
+                            <button className="success" type="submit">Approve</button>
+                          </form>
+                          <form action={updateStatus}>
+                            <input type="hidden" name="id" value={r.id} />
+                            <input type="hidden" name="status" value="Rejected" />
+                            <button className="danger" type="submit">Reject</button>
+                          </form>
+                        </>
                       )}
                     </div>
                   </td>

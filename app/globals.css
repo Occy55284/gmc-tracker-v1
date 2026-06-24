@@ -199,6 +199,10 @@ button.success, .btn-success {
   background: linear-gradient(135deg, var(--emerald) 0%, #059669 100%);
   box-shadow: 0 4px 12px rgba(16, 185, 129, 0.28);
 }
+button.danger, .btn-danger {
+  background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.28);
+}
 .btn-block { width: 100%; justify-content: center; margin-top: 22px; }
 
 /* ---------- Tables ---------- */
@@ -244,6 +248,7 @@ td pre {
 .badge-submitted { color: #b45309; background: #fef3c7; }
 .badge-delivered { color: #0e7490; background: #cffafe; }
 .badge-approved { color: #047857; background: #d1fae5; }
+.badge-rejected { color: #b91c1c; background: #fee2e2; }
 
 /* ---------- Misc ---------- */
 .actions { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
