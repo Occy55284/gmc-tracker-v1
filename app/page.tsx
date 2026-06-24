@@ -57,7 +57,7 @@ export default async function Dashboard() {
         <h2>Recent Requests</h2>
         <div className="table-wrap">
           <table>
-            <thead><tr><th>Date</th><th>Requestor</th><th>Rooms</th><th>Status</th><th>Total</th></tr></thead>
+            <thead><tr><th>Date</th><th>Requestor</th><th>Rooms</th><th>Status</th><th>Approved By</th><th>Total</th></tr></thead>
             <tbody>
               {rows.map((r) => (
                 <tr key={r.id}>
@@ -65,10 +65,11 @@ export default async function Dashboard() {
                   <td>{r.requestor_name}</td>
                   <td>{r.room_count}</td>
                   <td><StatusBadge status={r.status} /></td>
+                  <td>{r.approved_by || '—'}</td>
                   <td>{money(r.total_cost)}</td>
                 </tr>
               ))}
-              {!rows.length && <tr><td colSpan={5} className="empty">No requests yet. <Link href="/new-request">Create the first request</Link>.</td></tr>}
+              {!rows.length && <tr><td colSpan={6} className="empty">No requests yet. <Link href="/new-request">Create the first request</Link>.</td></tr>}
             </tbody>
           </table>
         </div>
