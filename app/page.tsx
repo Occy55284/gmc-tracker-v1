@@ -60,9 +60,9 @@ export default async function Dashboard() {
             <thead><tr><th>Date</th><th>Requestor</th><th>Rooms</th><th>Status</th><th>Approved By</th><th>Total</th></tr></thead>
             <tbody>
               {rows.map((r) => (
-                <tr key={r.id}>
-                  <td>{r.request_date}</td>
-                  <td>{r.requestor_name}</td>
+                <tr key={r.id} className="row-link">
+                  <td><Link href={`/requests/${r.id}`}>{r.request_date}</Link></td>
+                  <td><Link href={`/requests/${r.id}`}>{r.requestor_name}</Link></td>
                   <td>{r.room_count}</td>
                   <td><StatusBadge status={r.status} /></td>
                   <td>{r.approved_by || '—'}</td>
