@@ -214,6 +214,8 @@ thead th {
 }
 tbody tr:last-child td, tbody tr:last-child th { border-bottom: 0; }
 tbody tr:hover td { background: #fafbff; }
+.row-link td a { color: inherit; text-decoration: none; display: block; }
+.row-link:hover td { background: #f0f3ff; cursor: pointer; }
 td pre {
   margin: 0 0 4px;
   font-family: ui-monospace, "SF Mono", Menlo, monospace;
