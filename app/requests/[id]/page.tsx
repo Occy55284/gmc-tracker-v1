@@ -69,7 +69,7 @@ export default async function RequestDetailPage({ params }: { params: Promise<{ 
                 <tr key={i}>
                   <td>{i + 1}</td>
                   <td>{room}</td>
-                  <td>{money(ROOM_PRICE)}</td>
+                  <td>{request.lunch_required ? money(0) : money(ROOM_PRICE)}</td>
                 </tr>
               ))}
               {!rooms.length && <tr><td colSpan={3} className="empty">No rooms listed.</td></tr>}
