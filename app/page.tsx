@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { supabase } from '@/lib/supabase'
-import { money } from '@/lib/calculations'
+import { money, formatDateWithDay } from '@/lib/calculations'
 import StatusBadge from './components/StatusBadge'
 
 export const dynamic = 'force-dynamic'
@@ -10,7 +10,7 @@ export default async function Dashboard() {
     .from('gmc_requests')
     .select('*')
     .order('created_at', { ascending: false })
-    .limit(10)
+    .limit(15)
 
   const rows = requests || []
   const rooms = rows.reduce((sum, r) => sum + Number(r.room_count || 0), 0)
@@ -58,7 +58,7 @@ export default async function Dashboard() {
             <tbody>
               {rows.map((r) => (
                 <tr key={r.id} className="row-link">
-                  <td><Link href={`/requests/${r.id}`}>{r.request_date}</Link></td>
+                  <td><Link href={`/requests/${r.id}`}>{formatDateWithDay(r.request_date)}</Link></td>
                   <td><Link href={`/requests/${r.id}`}>{r.requestor_name}</Link></td>
                   <td>{r.room_count}</td>
                   <td><StatusBadge status={r.status} /></td>

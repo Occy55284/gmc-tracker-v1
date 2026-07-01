@@ -18,3 +18,13 @@ export function money(value: number | string | null | undefined): string {
     currency: 'GBP'
   }).format(num)
 }
+
+export function formatDateWithDay(dateStr: string): string {
+  return new Date(`${dateStr}T00:00:00Z`).toLocaleDateString('en-GB', {
+    weekday: 'short',
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+    timeZone: 'UTC'
+  })
+}
