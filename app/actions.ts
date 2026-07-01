@@ -63,7 +63,7 @@ export async function createRequest(formData: FormData) {
     requestor_name: String(formData.get('requestor_name') || '').trim(),
     room_list: roomList.trim(),
     room_count: countRooms(roomList),
-    refreshment_total: refreshmentTotal(roomList),
+    refreshment_total: lunchRequired ? 0 : refreshmentTotal(roomList),
     lunch_required: lunchRequired,
     lunch_details: String(formData.get('lunch_details') || '').trim() || null,
     lunch_time: lunchRequired ? (String(formData.get('lunch_time') || '').trim() || null) : null,
@@ -115,7 +115,8 @@ export async function addLunch(formData: FormData) {
     lunch_required: true,
     lunch_details: lunchDetails || null,
     lunch_time: lunchTime || null,
-    lunch_cost: lunchCost
+    lunch_cost: lunchCost,
+    refreshment_total: 0
   }
 
   const { error } = await getSupabase().from('gmc_requests').update(updates).eq('id', id)
