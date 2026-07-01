@@ -1,4 +1,5 @@
 import { createRequest } from '@/app/actions'
+import SubmitButton from '@/app/components/SubmitButton'
 
 export default function NewRequestPage() {
   const today = new Date().toISOString().slice(0, 10)
@@ -38,7 +39,7 @@ export default function NewRequestPage() {
           <label>Notes</label>
           <textarea name="notes" placeholder="Optional notes" />
 
-          <button type="submit" className="btn-block">Submit to Hospitality</button>
+          <SubmitButton>Submit to Hospitality</SubmitButton>
         </form>
       </div>
     </>
